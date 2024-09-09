@@ -11,40 +11,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useContext } from 'react';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { AuthContext } from '@/contexts/AuthContext';
 
 export default function SignInForm() {
-    const { register, handleSubmit } = useForm();
-    const { signIn } = useContext(AuthContext)
-    const router = useRouter();
 
-    async function handleSignIn(data: any){
-        await signIn(data) 
+    async function handleSignIn(event: React.FormEvent) {
+        event.preventDefault();
+        window.location.href = '/portal/user';
     }
-
-    // async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    //     event.preventDefault()
-
-    //     const formData = new FormData(event.currentTarget)
-    //     const email = formData.get('email')
-    //     const password = formData.get('password')
-
-    //     const response = await fetch('/api/auth/login', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ email, password }),
-    //     })
-
-    //     if (response.ok) {
-    //         router.push('/profile')
-    //     } else {
-    //         // Handle errors
-    //     }
-    // }
 
     return (
         <>
@@ -53,14 +26,14 @@ export default function SignInForm() {
                     <CardTitle>SIGN IN</CardTitle>
                     <CardDescription>Sign in to continue</CardDescription>
                 </CardHeader>
-                <form onSubmit={handleSubmit(handleSignIn)}>
+                <form onSubmit={handleSignIn}>
                     <CardContent>
                         <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="email">Email</Label>
                                 <Input 
-                                    {...register('email')}
                                     id="email" 
+                                    placeholder='type something...'
                                     name="email" 
                                     type="email" 
                                     required 
@@ -69,10 +42,10 @@ export default function SignInForm() {
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="password">Password</Label>
                                 <Input 
-                                    {...register('password')}
                                     id="password" 
                                     name="password" 
                                     type="password" 
+                                    placeholder='type something again...'
                                     required 
                                 />
                             </div>
@@ -107,15 +80,6 @@ export default function SignInForm() {
                     </CardFooter>
                 </form>
             </Card>
-            {/* <div className="">
-                <Image
-                    src="src/assets/img.webp"
-                    width={1000}
-                    height={760}
-                    className='rounded-2xl'
-                    alt='Screenshots of the dashboard project showing desktop version'
-                />
-            </div> */}
         </>
     )
 }
